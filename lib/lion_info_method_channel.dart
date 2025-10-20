@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'lion_info_platform_interface.dart';
+import 'install_referrer_info.dart';
 
 /// An implementation of [LionInfoPlatform] that uses method channels.
 class MethodChannelLionInfo extends LionInfoPlatform {
@@ -81,5 +82,14 @@ class MethodChannelLionInfo extends LionInfoPlatform {
   @override
   Future<String> getDefaultUserAgent()async{
     return await methodChannel.invokeMethod("getDefaultUserAgent");
+  }
+  @override
+  Future<void> goNotiSet() async {
+    await methodChannel.invokeMethod("goNotiSet");
+  }
+  @override
+  Future<InstallReferrerInfo> getInstallReferrer() async {
+    final map = await methodChannel.invokeMethod("getInstallReferrer");
+    return InstallReferrerInfo.fromMap(map);
   }
 }

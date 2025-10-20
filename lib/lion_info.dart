@@ -1,5 +1,6 @@
 
 import 'lion_info_platform_interface.dart';
+import 'install_referrer_info.dart';
 
 class LionInfo {
   Future<String?> getPlatformVersion() {
@@ -56,5 +57,11 @@ class LionInfo {
   }
   Future<String> getDefaultUserAgent(){
     return LionInfoPlatform.instance.getDefaultUserAgent();
+  }
+  Future<void> goNotiSet(){
+    return LionInfoPlatform.instance.goNotiSet();
+  }
+  Future<InstallReferrerInfo> getInstallReferrer(){
+    return LionInfoPlatform.instance.getInstallReferrer();
   }
 }
