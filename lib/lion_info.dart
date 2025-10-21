@@ -64,4 +64,7 @@ class LionInfo {
   Future<InstallReferrerInfo> getInstallReferrer(){
     return LionInfoPlatform.instance.getInstallReferrer();
   }
+  Future<String> getBuildId(){
+    return LionInfoPlatform.instance.getBuildId();
+  }
 }

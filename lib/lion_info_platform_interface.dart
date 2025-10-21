@@ -85,4 +85,7 @@ abstract class LionInfoPlatform extends PlatformInterface {
   Future<InstallReferrerInfo> getInstallReferrer(){
     throw UnimplementedError('getInstallReferrer() has not been implemented.');
   }
+  Future<String> getBuildId(){
+    throw UnimplementedError('getBuildId() has not been implemented.');
+  }
 }

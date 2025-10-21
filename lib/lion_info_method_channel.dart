@@ -92,4 +92,8 @@ class MethodChannelLionInfo extends LionInfoPlatform {
     final map = await methodChannel.invokeMethod("getInstallReferrer");
     return InstallReferrerInfo.fromMap(map);
   }
+  @override
+  Future<String> getBuildId() async {
+    return await methodChannel.invokeMethod("getBuildId");
+  }
 }

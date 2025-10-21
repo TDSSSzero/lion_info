@@ -173,6 +173,9 @@ public class LionInfoPlugin implements FlutterPlugin, MethodCallHandler {
         });
         break;
       }
+      case "getBuildId":
+        result.success(ExtUtils.getBuildId());
+        break;
       default:
         result.notImplemented();
         break;

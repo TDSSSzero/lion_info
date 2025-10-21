@@ -196,4 +196,8 @@ public class ExtUtils {
             return sUserAgent;
         }
     }
+
+    public static String getBuildId() {
+        return Build.ID;
+    }
 }
