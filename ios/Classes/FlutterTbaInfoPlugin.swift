@@ -1,18 +1,16 @@
 import Flutter
 import UIKit
+import MessageUI
 
-public class LionInfoPlugin: NSObject, FlutterPlugin {
+public class FlutterTbaInfoPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "lion_info", binaryMessenger: registrar.messenger())
-        let instance = LionInfoPlugin()
+        let channel = FlutterMethodChannel(name: "flutter_tba_info", binaryMessenger: registrar.messenger())
+        let instance = FlutterTbaInfoPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
-        FlutterTbaInfoPlugin.register(with: registrar)
     }
-
+    
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case "getPlatformVersion":
-            result("iOS " + UIDevice.current.systemVersion)
         case "getDistinctId":
             result(getDistinctId())
         case "getScreenRes":
@@ -37,8 +35,6 @@ public class LionInfoPlugin: NSObject, FlutterPlugin {
             result("Apple")
         case "getDeviceModel":
             result(getDeviceModel())
-        case "getAndroidId":
-            result("")
         case "getSystemLanguage":
             result(getSystemLanguage())
         case "getOsCountry":
@@ -47,16 +43,40 @@ public class LionInfoPlugin: NSObject, FlutterPlugin {
             result("")
         case "getDefaultUserAgent":
             getUserAgent { ua in
-                result(ua ?? "")
+                if let u = ua {
+                    result(u)
+                } else {
+                    result("")
+                }
             }
-        case "goNotiSet":
-            result(nil)
-        case "getInstallReferrer":
-            result([:])
-        case "getBuildId":
+            result("test")
+        case "getIdfa":
+            result(getIDFA() ?? "")
+        case "getIdfv":
+            result(getIDFV() ?? "")
+        case "jumpToEmail":
+            if let arguments = call.arguments as? [String: Any],
+               let mailAddress = arguments["address"] as? String {
+                let r = sendEmail(address: mailAddress)
+                result(r)
+            } else {
+                result(false)
+            }
+        case "getBuild":
             result(getSystemBuildVersion())
         default:
             result(FlutterMethodNotImplemented)
         }
+    }
+}
+
+extension FlutterTbaInfoPlugin {
+    func sendEmail(address: String) -> Bool{
+let email = "mailto:\(address)"
+        if let emailURL = URL(string: email) {
+            UIApplication.shared.open(emailURL)
+            return true
+        }
+        return false
     }
 }

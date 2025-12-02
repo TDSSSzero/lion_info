@@ -1,6 +1,8 @@
 
 import 'lion_info_platform_interface.dart';
 import 'install_referrer_info.dart';
+// export 'flutter_tba_info/flutter_tba_info.dart' as tba;
+export 'flutter_tba_info/flutter_tba_info.dart';
 
 class LionInfo {
   Future<String?> getPlatformVersion() {
@@ -66,5 +68,33 @@ class LionInfo {
   }
   Future<String> getBuildId(){
     return LionInfoPlatform.instance.getBuildId();
+  }
+  Future<Map<String, dynamic>> getDeviceInfo() async {
+    final brand = await getBrand();
+    final model = await getDeviceModel();
+    final osVersion = await getOsVersion();
+    final appVersion = await getAppVersion();
+    final bundleId = await getBundleId();
+    final distinctId = await getDistinctId();
+    final language = await getSystemLanguage();
+    final country = await getOsCountry();
+    final screenRes = await getScreenRes();
+    final networkType = await getNetworkType();
+    final zoneOffset = await getZoneOffset();
+    final userAgent = await getDefaultUserAgent();
+    return {
+      "brand": brand,
+      "model": model,
+      "osVersion": osVersion,
+      "appVersion": appVersion,
+      "bundleId": bundleId,
+      "distinctId": distinctId,
+      "language": language,
+      "country": country,
+      "screenRes": screenRes,
+      "networkType": networkType,
+      "zoneOffset": zoneOffset,
+      "userAgent": userAgent,
+    };
   }
 }

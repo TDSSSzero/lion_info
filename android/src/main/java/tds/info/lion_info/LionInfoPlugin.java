@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
+import com.example.flutter_tba_info.FlutterTbaInfoPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,12 +32,15 @@ public class LionInfoPlugin implements FlutterPlugin, MethodCallHandler {
   /// when the Flutter Engine is detached from the Activity
   private MethodChannel channel;
   private Context applicationContext;
+  private FlutterTbaInfoPlugin tbaPlugin;
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "lion_info");
     channel.setMethodCallHandler(this);
     applicationContext = flutterPluginBinding.getApplicationContext();
+    tbaPlugin = new FlutterTbaInfoPlugin();
+    tbaPlugin.onAttachedToEngine(flutterPluginBinding);
   }
 
   @Override
@@ -185,5 +189,8 @@ public class LionInfoPlugin implements FlutterPlugin, MethodCallHandler {
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
     channel.setMethodCallHandler(null);
+    if (tbaPlugin != null) {
+      tbaPlugin.onDetachedFromEngine(binding);
+    }
   }
 }

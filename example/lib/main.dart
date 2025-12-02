@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:lion_info/lion_info.dart';
+import 'test_pages/android_page.dart';
+import 'test_pages/ios_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,7 +57,38 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Running on: $_platformVersion'),
+              const SizedBox(height: 24),
+              Builder(
+                builder: (ctx) => Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          ctx,
+                          MaterialPageRoute(builder: (_) => const AndroidPage()),
+                        );
+                      },
+                      child: const Text('Android 页面'),
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          ctx,
+                          MaterialPageRoute(builder: (_) => const IosPage()),
+                        );
+                      },
+                      child: const Text('iOS 页面'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
